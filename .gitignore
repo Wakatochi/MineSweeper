@@ -1,5 +1,5 @@
 MineSweeper.vcxproj
 MineSweeper.vcxproj.filters
 MineSweeper.vcxproj.user
-.vs/*
-.x64/*
+.vs/**
+.x64/**
