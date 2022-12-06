@@ -2,6 +2,8 @@
 Visual Studio project.
 MineSweeper SFML C++. Dynamic allocated array for arbitrary size on the board.
 
+![alt text](https://github.com/Wakatochi/MineSweeper/blob/main/resources/screenshots/board_1.jpg)
+
 TODO:
     1. Timer
     3. Sprite for wrongly placed flaggs
