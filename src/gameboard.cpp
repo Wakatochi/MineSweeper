@@ -1,4 +1,5 @@
 #include "gameboard.h"
+#include "globals.h"
 #include <random>
 
 using namespace std;
@@ -10,6 +11,8 @@ GameBoard::GameBoard()
    m_first = false;
    m_mines = 0;
    m_minesLeft = 0;
+   m_gameOver = false;
+   m_gameWin = false;
 
    m_tiles = NULL;
 }
@@ -21,6 +24,8 @@ GameBoard::GameBoard(int colums, int rows, int mines)
    m_first = true;
    m_mines = mines;
    m_minesLeft = mines;
+   m_gameOver = false;
+   m_gameWin = false;
 
    initTiles();
 }
@@ -55,6 +60,11 @@ GameBoard::resizeBoard(int colums, int rows, int mines)
 void
 GameBoard::openKlick(float xPos, float yPos)
 {
+   if(m_gameOver)
+   {
+      return;
+   }
+
    for(int i = 0; i < m_colums * m_rows; i++)
    {
       if(m_tiles[i]->getState() != Tile::State_Open && m_tiles[i]->clicked(xPos, yPos))
@@ -65,6 +75,11 @@ GameBoard::openKlick(float xPos, float yPos)
          }
 
          m_tiles[i]->setState(Tile::State_Open);
+         if(m_tiles[i]->getMine())
+         {
+            m_gameOver = true;
+            return;
+         }
 
          if(m_first)
          {
@@ -86,7 +101,18 @@ GameBoard::openKlick(float xPos, float yPos)
 void
 GameBoard::open(int column, int row)
 {
+   if(m_gameOver)
+   {
+      return;
+   }
+
    m_tiles[calc2dTo1d(column, row)]->setState(Tile::State_Open);
+
+   if(m_tiles[calc2dTo1d(column, row)]->getMine())
+   {
+      m_gameOver = true;
+      return;
+   }
 
    int val = checkMines(column, row);
    if(val == 0)
@@ -118,6 +144,11 @@ GameBoard::open(int column, int row)
 void
 GameBoard::flag(float xPos, float yPos)
 {
+   if(m_gameOver)
+   {
+      return;
+   }
+
    for(int i = 0; i < m_colums * m_rows; i++)
    {
       if(m_tiles[i]->getState() != Tile::State_Open && m_tiles[i]->clicked(xPos, yPos))
@@ -129,11 +160,13 @@ GameBoard::flag(float xPos, float yPos)
          else if(m_tiles[i]->getState() == Tile::State_Flagged)
          {
             m_tiles[i]->setState(Tile::State_Closed);
-            
+            m_minesLeft++;
+
             return;
          }
 
          m_tiles[i]->setState(Tile::State_Flagged);
+         m_minesLeft--;
 
          return;
       }
@@ -145,6 +178,20 @@ GameBoard::reset()
 {
    resizeBoard(m_colums, m_rows, m_mines);
    m_first = true;
+   m_gameOver = false;
+   m_gameWin = false;
+}
+
+bool
+GameBoard::getGameOver()
+{
+   return m_gameOver;
+}
+
+bool
+GameBoard::getGameWin()
+{
+   return m_gameWin;
 }
 
 void
@@ -152,12 +199,14 @@ GameBoard::initTiles()
 {
    int col = 0;
    int row = 0;
-   float size = 30.0f;
+   float size = 22.5f;
+   int xOffset = (global::Const_Window_Custom::WINDOW_WIDTH - (m_colums * size)) * 0.5f;
+   int yOffset = (global::Const_Window_Custom::WINDOW_WIDTH - (m_colums * size)) * 0.5f;
 
    m_tiles = new Tile * [m_colums * m_rows];
    for(int i = 0; i < m_colums * m_rows; i++)
    {
-      m_tiles[i] = new Tile(float(col + 1) * size, float(row + 1) * size);
+      m_tiles[i] = new Tile(float((col * size) + xOffset) , float((row * size) + yOffset));
 
       if(col++ >= m_colums - 1)
       {

@@ -50,8 +50,46 @@ Tile::Draw(RenderWindow& window)
 
             if(m_value > 0)
             {
+               Color val = Color::Blue;
+               switch(m_value)
+               {
+                  case 1:
+                     val = Color::Blue;
+                     break;
+
+                  case 2:
+                     val = Color::Green;
+                     break;
+
+                  case 3:
+                     val = Color::Red;
+                     break;
+
+                  case 4:
+                     val = Color(255, 0, 255, 255);
+                     break;
+
+                  case 5:
+                     val = Color(0, 255, 255, 255);
+                     break;
+
+                  case 6:
+                     val = Color(255, 255, 0, 255);
+                     break;
+
+                  case 7:
+                     val = Color::Black;
+                     break;
+
+                  case 8:
+                     val = Color::White;
+                     break;
+
+                  default:
+                     val = Color::Blue;
+               }
                ResourceHandler::getInstance().getText(m_value, Color::Blue).setPosition(m_xPos + 10, m_yPos + 5);
-               window.draw(ResourceHandler::getInstance().getText(m_value, Color::Blue));
+               window.draw(ResourceHandler::getInstance().getText(m_value, val));
             }
          }
          else

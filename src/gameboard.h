@@ -19,12 +19,17 @@ class GameBoard
       void flag(float xPos, float yPos);
       void reset();
 
+      bool getGameOver();
+      bool getGameWin();
+
    private:
       int m_colums;
       int m_rows;
       bool m_first;
       int m_mines;
       int m_minesLeft;
+      bool m_gameOver;
+      bool m_gameWin;
 
       Tile** m_tiles;
 

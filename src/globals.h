@@ -3,6 +3,15 @@
 
 namespace global
 {
+   struct Const_Window_Custom
+   {
+      enum Const_Window
+      {
+         WINDOW_WIDTH = 950,
+         WINDOW_HEIGHT = 950
+      };
+   };
+
    struct Const_Window_1920_1080
    {
       enum Const_Window
@@ -44,8 +53,8 @@ namespace global
    {
       enum Board_Size
       {
-         BOARDSIZE_COLUMNS = 8,
-         BOARDSIZE_ROWS    = 8,
+         BOARDSIZE_COLUMNS = 9,
+         BOARDSIZE_ROWS    = 9,
          MINES             = 10
       };
    };
@@ -66,7 +75,7 @@ namespace global
       {
          BOARDSIZE_COLUMNS = 16,
          BOARDSIZE_ROWS    = 30,
-         MINES             = 40
+         MINES             = 99
       };
    };
 }

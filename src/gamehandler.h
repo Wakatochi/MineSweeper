@@ -3,6 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 #include "gameboard.h"
+#include "face.h"
 
 using namespace sf;
 
@@ -17,6 +18,7 @@ class GameHandler
    private:
       RenderWindow* m_mainWindow;
       GameBoard* m_board;
+      Face* m_face;
 
       void InitWindow();
 

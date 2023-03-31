@@ -22,7 +22,13 @@ class ResourceHandler: public Singleton<ResourceHandler>
       Sprite& getBombSprite();
       Sprite& getFlaggSprite();
 
+      Sprite& getFaceNormalSprite();
+      Sprite& getFaceOpenSprite();
+      Sprite& getFaceWinSprite();
+      Sprite& getFaceDeadSprite();
+
       Font& getFont();
+      Font& getClockFont();
       Text& getText(int mines, Color color);
 
    private:
@@ -33,12 +39,23 @@ class ResourceHandler: public Singleton<ResourceHandler>
       Texture m_bombTexture;
       Texture m_flaggTexture;
 
+      Texture m_faceNormalTexture;
+      Texture m_faceOpenTexture;
+      Texture m_faceWinTexture;
+      Texture m_faceDeadTexture;
+
       Sprite m_hiddenSprite;
       Sprite m_openSprite;
       Sprite m_bombSprite;
       Sprite m_flaggSprite;
 
+      Sprite m_faceNormalSprite;
+      Sprite m_faceOpenSprite;
+      Sprite m_faceWinSprite;
+      Sprite m_faceDeadSprite;
+
       Font m_font;
+      Font m_clockFont;
       Text m_text;
 
       String toString(int val);
