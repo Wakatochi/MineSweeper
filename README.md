@@ -17,5 +17,5 @@ TODO:
 Win condition:
    Open all empty spaces.
 
-Loose condition:
+Lose condition:
    Open a space with a mine in it.
