@@ -1,6 +1,7 @@
 #ifndef GAMEBOARD_H
 #define GAMEBOARD_H
 
+#include "display.h"
 #include "tile.h"
 
 class GameBoard
@@ -19,6 +20,7 @@ class GameBoard
       void flag(float xPos, float yPos);
       void reset();
 
+      Time getGameTime();
       bool getGameOver();
       bool getGameWin();
 
@@ -32,6 +34,7 @@ class GameBoard
       bool m_gameWin;
 
       Tile** m_tiles;
+      Display m_clockDisplay;
 
       void initTiles();
       void deleteTiles();
@@ -43,6 +46,9 @@ class GameBoard
       int calc2dTo1d(int x, int y);
 
       Clock m_clock;
+      
+      Clock m_gameClock;
+      Time m_gameTime;
 };
 
 #endif
