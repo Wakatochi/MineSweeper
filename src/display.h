@@ -23,6 +23,11 @@ class Display
       
       RectangleShape m_display;
       Text m_text;
+
+      const float SIZE_X = 65.0f;
+      const float SIZE_Y = 30.0f;
+      const float TEXT_OFFSET_X = 2.0f;
+      const float TEXT_OFFSET_Y = - 5.0f;
 };
 
 #endif
