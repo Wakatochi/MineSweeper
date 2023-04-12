@@ -13,11 +13,11 @@ GameBoard::GameBoard()
    m_first = false;
    m_mines = 0;
    m_minesLeft = 0;
+   m_spaceLeft = 0;
    m_gameOver = false;
    m_gameWin = false;
 
    m_tiles = NULL;
-//   m_clockDisplay = NULL;
 }
 
 GameBoard::GameBoard(int colums, int rows, int mines)
@@ -29,6 +29,7 @@ GameBoard::GameBoard(int colums, int rows, int mines)
    m_minesLeft = mines;
    m_gameOver = false;
    m_gameWin = false;
+   m_spaceLeft = (m_colums * m_rows) - m_mines;
    m_gameTime = Time::Zero;
 
    initTiles();
@@ -37,8 +38,6 @@ GameBoard::GameBoard(int colums, int rows, int mines)
 GameBoard::~GameBoard()
 {
    deleteTiles();
-
-//   delete m_clockDisplay;
 }
 
 void
@@ -49,11 +48,16 @@ GameBoard::Draw(RenderWindow& window)
       m_tiles[i]->Draw(window);
    }
 
-   ostringstream os;
-   os << roundf(getGameTime().asSeconds() * 100) / 100;
+   ostringstream clockStr;
+   ostringstream minesStr;
+   clockStr << roundf(getGameTime().asSeconds() * 100) / 100;
+   minesStr << m_minesLeft;
    
-   m_clockDisplay.setText(os.str());
+   m_clockDisplay.setText(clockStr.str());
    m_clockDisplay.Draw(window);
+
+   m_minesDisplay.setText(minesStr.str());
+   m_minesDisplay.Draw(window);
 }
 
 void
@@ -65,6 +69,7 @@ GameBoard::resizeBoard(int colums, int rows, int mines)
    m_rows = rows;
    m_mines = mines;
    m_minesLeft = mines;
+   m_spaceLeft = (m_colums * m_rows) - m_mines;
 
    initTiles();
 }
@@ -72,7 +77,7 @@ GameBoard::resizeBoard(int colums, int rows, int mines)
 void
 GameBoard::openKlick(float xPos, float yPos)
 {
-   if(m_gameOver)
+   if(m_gameOver || m_gameWin)
    {
       return;
    }
@@ -114,7 +119,7 @@ GameBoard::openKlick(float xPos, float yPos)
 void
 GameBoard::open(int column, int row)
 {
-   if(m_gameOver)
+   if(m_gameOver || m_gameWin)
    {
       return;
    }
@@ -125,6 +130,12 @@ GameBoard::open(int column, int row)
    {
       m_gameOver = true;
       return;
+   }
+
+   m_spaceLeft--;
+   if(m_spaceLeft == 0)
+   {
+      m_gameWin = true;
    }
 
    int val = checkMines(column, row);
@@ -157,7 +168,7 @@ GameBoard::open(int column, int row)
 void
 GameBoard::flag(float xPos, float yPos)
 {
-   if(m_gameOver)
+   if(m_gameOver || m_gameWin)
    {
       return;
    }
@@ -202,7 +213,7 @@ GameBoard::getGameTime()
    {
       m_gameTime = Time::Zero;
    }
-   else if(!m_gameOver)
+   else if(!m_gameOver && !m_gameWin)
    {
       m_gameTime = m_gameClock.getElapsedTime();
    }
@@ -243,7 +254,7 @@ GameBoard::initTiles()
       }
    }
    m_clockDisplay.setPosition(xOffset + 50.0f, yOffset - 50.0f);
-//   m_clockDisplay = new Display(xOffset + 50.0f, yOffset - 50.0f);
+   m_minesDisplay.setPosition(xOffset + 180.0f, yOffset - 50.0f);
 }
 
 void
@@ -261,12 +272,6 @@ GameBoard::deleteTiles()
    {
       delete[] m_tiles;
    }
-/*
-   if(m_clockDisplay != NULL)
-   {
-      delete m_clockDisplay;
-   }
-*/
 }
 
 void
@@ -278,13 +283,15 @@ GameBoard::generateMines(int free)
    uniform_int_distribution<int> distribution(0, (m_colums * m_rows) - 1);
    generator.seed((unsigned int)elapsed.asMicroseconds());
 
-   for(int i = 0; i < m_mines; i++)
+   int mines = 0;
+   while(mines < m_mines)
    {
       int index = distribution(generator);
 
       while(!m_tiles[index]->getMine() && index != free)
       {
          m_tiles[index]->setMine(true);
+         mines++;
       }
    }
 }
