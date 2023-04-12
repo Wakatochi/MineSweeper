@@ -30,11 +30,13 @@ class GameBoard
       bool m_first;
       int m_mines;
       int m_minesLeft;
+      int m_spaceLeft;
       bool m_gameOver;
       bool m_gameWin;
 
       Tile** m_tiles;
       Display m_clockDisplay;
+      Display m_minesDisplay;
 
       void initTiles();
       void deleteTiles();
