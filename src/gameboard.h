@@ -3,6 +3,7 @@
 
 #include "display.h"
 #include "tile.h"
+#include "boarder.h"
 
 class GameBoard
 {
@@ -11,6 +12,7 @@ class GameBoard
       GameBoard(int colums, int rows, int mines);
       ~GameBoard();
 
+      void Update();
       void Draw(RenderWindow& window);
 
       void resizeBoard(int colums, int rows, int mines);
@@ -19,6 +21,7 @@ class GameBoard
       void open(int column, int row);
       void flag(float xPos, float yPos);
       void reset();
+      void setFaceState(Face::State state);
 
       Time getGameTime();
       bool getGameOver();
@@ -35,8 +38,9 @@ class GameBoard
       bool m_gameWin;
 
       Tile** m_tiles;
-      Display m_clockDisplay;
-      Display m_minesDisplay;
+//      Display m_clockDisplay;
+//      Display m_minesDisplay;
+      Boarder* m_boarder;
 
       void initTiles();
       void deleteTiles();

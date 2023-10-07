@@ -79,20 +79,23 @@ GameHandler::Update()
             else if(event.key.code == Keyboard::Space)
             {
                m_board->reset();
-               m_face->setState(Face::Face_Normal);
+               m_board->setFaceState(Face::Face_Normal);
+               //m_face->setState(Face::Face_Normal);
             }
 
          case Event::MouseButtonPressed:
             if(event.mouseButton.button == Mouse::Left)
             {
-               m_face->setState(Face::Face_Open);
+               //m_face->setState(Face::Face_Open);
+               m_board->setFaceState(Face::Face_Open);
             }
             break;
 
          case Event::MouseButtonReleased:
             if(event.mouseButton.button == Mouse::Left)
             {
-               m_face->setState(Face::Face_Normal);
+               //m_face->setState(Face::Face_Normal);
+               m_board->setFaceState(Face::Face_Normal);
                // Open tile;
                m_board->openKlick((float)Mouse::getPosition(*m_mainWindow).x, (float)Mouse::getPosition(*m_mainWindow).y);
             }
@@ -103,15 +106,19 @@ GameHandler::Update()
             }
             break;
       }
+
+      m_board->Update();
    }
 
    if(m_board->getGameOver())
    {
-      m_face->setState(Face::Face_Dead);
+      //m_face->setState(Face::Face_Dead);
+      m_board->setFaceState(Face::Face_Dead);
    }
    else if(m_board->getGameWin())
    {
-      m_face->setState(Face::Face_Win);
+      //m_face->setState(Face::Face_Win);
+      m_board->setFaceState(Face::Face_Win);
    }
 
    return true;
@@ -120,10 +127,10 @@ GameHandler::Update()
 void
 GameHandler::Draw()
 {
-   m_mainWindow->clear(Color::White);
+   m_mainWindow->clear(Color::Blue);
    
    m_board->Draw(*m_mainWindow);
-   m_face->Draw(*m_mainWindow);
+//   m_face->Draw(*m_mainWindow);
 
    m_mainWindow->display();
 }
