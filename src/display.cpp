@@ -52,6 +52,12 @@ Display::setText(String text)
    m_text.setString(text);
 }
 
+Vector2f
+Display::getSize()
+{
+   return m_display.getSize();
+}
+
 void
 Display::Draw(RenderWindow& window)
 {

@@ -15,6 +15,8 @@ class Display
       void setPosition(float x, float y);
       void setText(String text);
 
+      Vector2f getSize();
+
       void Draw(RenderWindow& window);
 
    private:

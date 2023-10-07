@@ -18,6 +18,7 @@ GameBoard::GameBoard()
    m_gameWin = false;
 
    m_tiles = NULL;
+   m_boarder = NULL;
 }
 
 GameBoard::GameBoard(int colums, int rows, int mines)
@@ -31,13 +32,31 @@ GameBoard::GameBoard(int colums, int rows, int mines)
    m_gameWin = false;
    m_spaceLeft = (m_colums * m_rows) - m_mines;
    m_gameTime = Time::Zero;
-
+   
+   // Boader must initiate before tiles since initTiles also sets boarder positions!
+   m_boarder = new Boarder();
+   
    initTiles();
 }
 
 GameBoard::~GameBoard()
 {
    deleteTiles();
+
+   delete m_boarder;
+}
+
+void GameBoard::Update()
+{
+   ostringstream clockStr;
+   ostringstream minesStr;
+   clockStr << roundf(getGameTime().asSeconds() * 100) / 100;
+   minesStr << m_minesLeft;
+
+//   m_clockDisplay.setText(clockStr.str());
+//   m_minesDisplay.setText(minesStr.str());
+
+   m_boarder->Update(clockStr.str(), minesStr.str());
 }
 
 void
@@ -48,16 +67,10 @@ GameBoard::Draw(RenderWindow& window)
       m_tiles[i]->Draw(window);
    }
 
-   ostringstream clockStr;
-   ostringstream minesStr;
-   clockStr << roundf(getGameTime().asSeconds() * 100) / 100;
-   minesStr << m_minesLeft;
-   
-   m_clockDisplay.setText(clockStr.str());
-   m_clockDisplay.Draw(window);
+   m_boarder->Draw(window);
 
-   m_minesDisplay.setText(minesStr.str());
-   m_minesDisplay.Draw(window);
+//   m_clockDisplay.Draw(window);
+//   m_minesDisplay.Draw(window);
 }
 
 void
@@ -206,6 +219,12 @@ GameBoard::reset()
    m_gameWin = false;
 }
 
+void
+GameBoard::setFaceState(Face::State state)
+{
+   m_boarder->SetFaceStatus(state);
+}
+
 Time
 GameBoard::getGameTime()
 {
@@ -242,6 +261,9 @@ GameBoard::initTiles()
    int xOffset = (int)((global::Const_Window_Custom::WINDOW_WIDTH - (m_colums * size)) * 0.5f);
    int yOffset = (int)((global::Const_Window_Custom::WINDOW_HEIGHT - (m_colums * size)) * 0.5f);
 
+   float yPadding = 50.0f;
+   float xPadding = 50.0f;
+
    m_tiles = new Tile * [m_colums * m_rows];
    for(int i = 0; i < m_colums * m_rows; i++)
    {
@@ -253,8 +275,15 @@ GameBoard::initTiles()
          col = 0;
       }
    }
-   m_clockDisplay.setPosition(xOffset + 50.0f, yOffset - 50.0f);
-   m_minesDisplay.setPosition(xOffset + 180.0f, yOffset - 50.0f);
+
+   float displaySize = m_boarder->getDisplaySize().x;
+   float mineCounterPosX = m_colums * size + xOffset - displaySize;
+
+   m_boarder->setClockPosition(xOffset + xPadding, yOffset - yPadding);
+   m_boarder->setMinePosition(mineCounterPosX - xPadding, yOffset - yPadding);
+
+//   m_clockDisplay.setPosition(xOffset + xPadding, yOffset - yPadding);
+//   m_minesDisplay.setPosition(mineCounterPosX - xPadding, yOffset - yPadding);
 }
 
 void

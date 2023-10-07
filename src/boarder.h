@@ -11,8 +11,15 @@ class Boarder
       Boarder();
       ~Boarder();
 
-      void Draw();
-      void Update();
+      void SetFaceStatus(Face::State state);
+      void setClockPosition(float x, float y);
+      void setMinePosition(float x, float y);
+      void setFacePosition(float x, float y);
+
+      Vector2f getDisplaySize();
+
+      void Update(sf::String clockStr, sf::String minesStr);
+      void Draw(RenderWindow& window);
 
    private:
       float m_sizeX;
