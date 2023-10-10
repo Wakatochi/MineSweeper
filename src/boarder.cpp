@@ -38,7 +38,7 @@ Boarder::setMinePosition(float x, float y)
 void
 Boarder::setFacePosition(float x, float y)
 {
-
+   m_face->setPosition(x, y);
 }
 
 Vector2f

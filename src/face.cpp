@@ -50,6 +50,8 @@ Face::Draw(RenderWindow& window)
          break;
    }
 
+   drawSprite.setOrigin(16.0f, 16.0f);
+   drawSprite.setPosition(m_xPos, m_yPos);
    window.draw(drawSprite);
 }
 
@@ -60,13 +62,10 @@ Face::setState(State state)
 }
 
 void
-Face::setXPos(float xPos)
+Face::setPosition(float xPos, float yPos)
 {
    m_xPos = xPos;
-}
-
-void
-Face::setYPos(float yPos)
-{
    m_yPos = yPos;
+
+   m_drawSprite.setPosition(m_xPos, m_yPos);
 }

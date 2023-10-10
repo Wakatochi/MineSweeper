@@ -23,8 +23,7 @@ class Face
       void Draw(RenderWindow& window);
       void setState(State state);
 
-      void setXPos(float xPos);
-      void setYPos(float yPos);
+      void setPosition(float xPos, float yPos);
 
    private:
       float m_xPos;

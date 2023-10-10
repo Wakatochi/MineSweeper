@@ -107,7 +107,6 @@ GameHandler::Update()
             break;
       }
 
-      m_board->Update();
    }
 
    if(m_board->getGameOver())
@@ -120,6 +119,8 @@ GameHandler::Update()
       //m_face->setState(Face::Face_Win);
       m_board->setFaceState(Face::Face_Win);
    }
+
+   m_board->Update();
 
    return true;
 }
