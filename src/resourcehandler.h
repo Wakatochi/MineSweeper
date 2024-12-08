@@ -27,6 +27,8 @@ class ResourceHandler: public Singleton<ResourceHandler>
       Sprite& getFaceWinSprite();
       Sprite& getFaceDeadSprite();
 
+      Texture* getBoarderTexture();
+
       Font& getFont();
       Font& getClockFont();
       Text& getText(int mines, Color color);
@@ -44,6 +46,8 @@ class ResourceHandler: public Singleton<ResourceHandler>
       Texture m_faceWinTexture;
       Texture m_faceDeadTexture;
 
+      Texture m_boarderTexture;
+
       Sprite m_hiddenSprite;
       Sprite m_openSprite;
       Sprite m_bombSprite;
@@ -53,6 +57,8 @@ class ResourceHandler: public Singleton<ResourceHandler>
       Sprite m_faceOpenSprite;
       Sprite m_faceWinSprite;
       Sprite m_faceDeadSprite;
+
+      Sprite m_boarderSprite;
 
       Font m_font;
       Font m_clockFont;

@@ -1,4 +1,5 @@
 #include "boarder.h"
+#include "resourcehandler.h"
 
 Boarder::Boarder()
 {
@@ -8,6 +9,13 @@ Boarder::Boarder()
    m_face = new Face(0.0f, 0.0f);
    m_time = new Display();
    m_mines = new Display();
+
+   m_frame.setSize(sf::Vector2f(0.0f, 0.0f));
+   m_frame.setPosition(sf::Vector2f(0.0f, 0.0f));
+
+   m_frame.setOutlineThickness(1);
+   m_frame.setOutlineColor(sf::Color::Black);
+   m_frame.setTexture(ResourceHandler::getInstance().getBoarderTexture());
 }
 
 Boarder::~Boarder()
@@ -15,6 +23,13 @@ Boarder::~Boarder()
    delete m_face;
    delete m_time;
    delete m_mines;
+}
+
+void
+Boarder::setBoarderSize(float x, float y)
+{
+   m_frame.setSize(sf::Vector2f(100.0f, 100.0f));
+   m_frame.setPosition(sf::Vector2f(0.0f, 0.0f));
 }
 
 void
@@ -57,6 +72,7 @@ Boarder::Update(sf::String clockStr, sf::String minesStr)
 void
 Boarder::Draw(RenderWindow& window)
 {
+   window.draw(m_frame);
    m_face->Draw(window);
 
    m_time->Draw(window);

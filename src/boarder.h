@@ -11,6 +11,7 @@ class Boarder
       Boarder();
       ~Boarder();
 
+      void setBoarderSize(float x, float y);
       void SetFaceStatus(Face::State state);
       void setClockPosition(float x, float y);
       void setMinePosition(float x, float y);
@@ -25,6 +26,7 @@ class Boarder
       float m_sizeX;
       float m_sizeY;
 
+      sf::RectangleShape m_frame;
       Face* m_face;
       Display* m_time;
       Display* m_mines;

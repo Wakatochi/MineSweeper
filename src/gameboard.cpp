@@ -285,9 +285,7 @@ GameBoard::initTiles()
    m_boarder->setClockPosition(xOffset + xPadding, yOffset - yPadding);
    m_boarder->setMinePosition(mineCounterPosX - xPadding, yOffset - yPadding);
    m_boarder->setFacePosition(facePosX, yOffset - yPadding);
-
-//   m_clockDisplay.setPosition(xOffset + xPadding, yOffset - yPadding);
-//   m_minesDisplay.setPosition(mineCounterPosX - xPadding, yOffset - yPadding);
+   m_boarder->setBoarderSize(0, 0);
 }
 
 void

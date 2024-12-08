@@ -35,6 +35,9 @@ ResourceHandler::ResourceHandler()
    m_faceDeadTexture.loadFromFile("resources\\textures\\dead.png");
    m_faceDeadSprite.setTexture(m_faceDeadTexture);
 
+   m_boarderTexture.loadFromFile("resources\\textures\\mahogny.png");
+   m_boarderSprite.setTexture(m_boarderTexture);
+
    m_font.loadFromFile("resources\\Fonts\\Retro Stereo Wide.ttf");
    m_clockFont.loadFromFile("resources\\Fonts\\lcddot_tr.ttf");
 
@@ -102,6 +105,12 @@ Sprite&
 ResourceHandler::getFaceDeadSprite()
 {
    return m_faceDeadSprite;
+}
+
+Texture*
+ResourceHandler::getBoarderTexture()
+{
+   return &m_boarderTexture;
 }
 
 Font&
